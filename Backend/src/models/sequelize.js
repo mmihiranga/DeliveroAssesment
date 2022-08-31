@@ -28,17 +28,17 @@ sequelize.authenticate()
     console.log('Error'+ err)
 })
 
-const db = {}
+const DatabaseSequelize = {}
 
-db.Sequelize = Sequelize
-db.sequelize = sequelize
+DatabaseSequelize.Sequelize = Sequelize
+DatabaseSequelize.sequelize = sequelize
 
-db.users = require('./User.js')(sequelize, DataTypes)
+DatabaseSequelize.users = require('./User.js')(sequelize, DataTypes)
 
-db.sequelize.sync({ force: false })
+DatabaseSequelize.sequelize.sync({ force: false })
 .then(() => {
-    console.log('yes re-sync done!')
+    console.log('Sync Completed!')
 })
 
 
-module.exports = db
+module.exports = DatabaseSequelize

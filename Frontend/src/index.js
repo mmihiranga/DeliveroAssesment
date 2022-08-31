@@ -6,8 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from "react-router-dom";
-import menusReducer from './redux/Menus'
-import userReducer from './redux/Users'
+import menusReducer from './redux/menuRedux'
+import userReducer from './redux/userRedux'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const store = configureStore({

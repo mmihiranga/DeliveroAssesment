@@ -1,4 +1,4 @@
-const db = require('../models')
+const db = require('../models/sequelize')
 const bcrypt = require("bcryptjs");
 const saltRounds = 5;
 
@@ -24,7 +24,13 @@ const Register = async (req, res) => {
             const user = new User(req.body);
             await user.save().then((data) => {
                 console.log(data);
-                res.status(200).send(data);
+                newUser={
+                    username: data.username,
+                    email: data.email,
+                    phone: data.phone,
+                    image: data.image,
+                }
+                res.status(200).send(newUser);
                 })
                 .catch((err) => {
                 console.log(err);
@@ -46,7 +52,13 @@ const CheckUser = async (req, res) => {
     } else {
         bcrypt.compare(req.body.password, user.password, function (err, result) {
             if (result) {
-                res.status(200).send(user)
+                newUser={
+                    username: user.username,
+                    email: user.email,
+                    phone: user.phone,
+                    image: user.image,
+                }
+                res.status(200).send(newUser)
             } else {
                 res.status(401).send({ message: 'Password is incorrect' })
             }
@@ -62,7 +74,13 @@ const getUserByEmail = async (req, res) => {
     if (!user) {
         res.status(200).send(null)
     } else {
-        res.status(200).send(user)
+        newUser={
+            username: user.username,
+            email: user.email,
+            phone: user.phone,
+            image: user.image,
+        }
+        res.status(200).send(newUser)
     }
     
 }

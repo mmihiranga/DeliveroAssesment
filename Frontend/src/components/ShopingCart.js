@@ -1,8 +1,7 @@
 import React from 'react'
-import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
 import { makeStyles } from '@mui/styles';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { CheckoutButton } from './Button/CustomBtn';
 
 const useStyles = makeStyles({
     cartContainer:{
@@ -17,47 +16,14 @@ const useStyles = makeStyles({
         borderRadius: '4px',
         boxShadow: '0 6px 20px rgba(0,0,0,.08)',
         '@media (max-width: 860px)': {
-
                 display:'none',
             
         }
     }
 })
 
-const CheckoutButton = styled(Button)(() => ({
-    transitionProperty: "box-shadow",
-    transitionDuration: "150ms",
-    transitionTimingFunction: "ease-in-out",
-    borderRadius: "4px",
-    height: "48px",
-    width: "100%",
-    fontSize: "15px",
-    fontWeight: "600",
-    background: "#e2e5e5",
-    color: "#abadad",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center",
-    outline: "none",
-    cursor: "pointer",
-    WebkitFontSmoothing: "antialiased",
-    textDecoration: "none",
-    webkitAppearance: "none",
-    mozAppearance: "none",
-    appearance: "none",
-    fontFamily: "plex-sans, sans-serif",
-    minHeight: "48px",
-    padding: " 12px 24px",
-    textTransform: "none",
-    elevation: "0",
-    marginBottom: "16px",
-    '&:hover': {
-        background: "#e2e5e5",
-        color: "#abadad",
-    },
 
-}));
+
 const ShoppingCart = () => {
 const classes = useStyles();
   return (

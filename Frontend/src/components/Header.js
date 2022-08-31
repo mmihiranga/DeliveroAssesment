@@ -16,8 +16,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import {MenuButton,MiniSearchButton,SignAndLoginButton} from './Button/CustomBtn';
 import { useDispatch } from 'react-redux';
-import { logout } from '../redux/Users';
-import { register } from '../redux/Users';
+import { logout } from '../redux/userRedux';
+import { register } from '../redux/userRedux';
 
 
 const Search = styled("div")(({ theme }) => ({
@@ -97,6 +97,8 @@ const useStyles = makeStyles({
     },
 });
 
+
+
 const Header = () => {
   let navigate = useNavigate();
   const classes = useStyles();
@@ -105,13 +107,12 @@ const Header = () => {
   const [userDetails, setUserDetails] = useState();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [toggle, setToggle] = React.useState(true);
-  const token = JSON.parse(sessionStorage.getItem("token"));
-
 
   useEffect(() => {
+    const token = JSON.parse(sessionStorage.getItem("token"));
     console.log(token);
     if (token) {
-      dispatch(register({username:token.username,password: token.password,email: token.email,phone: token.phone,image:token.image}));
+      dispatch(register({username:token.username,email: token.email,phone: token.phone,image:token.image}));
     }
   }, []);
 
@@ -174,7 +175,7 @@ const Header = () => {
                 </Search>
                 <MiniSearchButton><SearchIcon/></MiniSearchButton>
                 <div className={classes.appBarButtonContainer}>
-                {userDetails ? 
+                {userDetails ?
                    <Avatar 
                    onClick={handleMenu}
                    alt={userDetails.username}

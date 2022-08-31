@@ -9,17 +9,17 @@ import Footer from './components/Footer.js';
 
 function App() {
   return (
-    <>
+    <div>
       <Header/>
       <Routes>
         <Route >
-          <Route path="/" index element={<Home />} />
+          <Route path="/" index element={<Home/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Route>
       </Routes>
       <Footer/>
-    </>
+    </div>
   );
 }
 

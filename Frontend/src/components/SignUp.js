@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@mui/styles';
 import Axios from '../ServerConfig';
-import { register } from '../redux/Users'
+import { register } from '../redux/userRedux'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ForgetPasswordButton,ManualRegisterButton} from './Button/CustomBtn';
@@ -73,50 +73,51 @@ const SignUp = () => {
         setUserDetails({ ...userDetails, [e.target.name]: e.target.value })
     }
 
-    const emailCheck = () => {
+    const emailCheck = async () => {
         setToggle(true)
         if (userDetails) {
-            Axios.post('/user/getUserDetails', userDetails)
-                .then(function (response) {
-                    console.log(response)
-                    if (response.data.length !== 0) {
-                        console.log("user already exists")
-                        setToggleRegister(true);
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+            try{
+                const response = await Axios.post('/user/getUserDetails', userDetails)
+                if (response.data.length !== 0) {
+                    console.log("user already exists")
+                    setToggleRegister(true);
+                }
+            } catch(error){
+                console.log(error)
+            }
         }
     }
-    const userLogin = () => {
-        Axios.post('/user/validateUser', userDetails)
-            .then(function (response) {
-                console.log(response)
-                dispatch(register(response.data))
-                const user = {
-                    username: response.data.username,
-                    email: response.data.email,
-                    phone:response.data.phone,
-                    password: response.data.password,
-                    image: response.data.image,
-                }
-                sessionStorage.setItem("token",JSON.stringify( user));
-                navigate('/')
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+   
+
+    const userLogin = async () => {
+       try {
+        const response = await Axios.post('/user/validateUser', userDetails)
+        console.log(response)
+        dispatch(register(response.data))
+        const user = {
+            username: response.data.username,
+            email: response.data.email,
+            phone: response.data.phone,
+            image: response.data.image,
+        }
+        sessionStorage.setItem("token", JSON.stringify(user));
+        navigate('/')
+
+        } catch (error) {
+        console.log(error)
+        }
     }
 
-    const userRegister = () => {
-        Axios.post('/user/register', userDetails)
-            .then(function (response) {
-                console.log(response)
-            }).catch(function (error) {
-                console.log(error);
-            });
+    const userRegister = async () => {
+        try {
+            const response = await Axios.post('/user/register', userDetails)
+            console.log(response)
+            navigate('/login')
+        } catch (err) {
+            console.log(err)
+        }
     }
+
     return (
         <div>
             <div className={classes.loginContainer}>

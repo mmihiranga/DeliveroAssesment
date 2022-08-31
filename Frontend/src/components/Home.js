@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { makeStyles } from '@mui/styles';
 import MenuData from '../assets/data/menu dishes sample.json'
 import { useSelector, useDispatch } from 'react-redux';
-import { addMenu } from '../redux/Menus'
+import { addMenu } from '../redux/menuRedux'
 import Menubar from './Menubar';
 import { Element } from 'react-scroll';
 import StickyBox from 'react-sticky-box';

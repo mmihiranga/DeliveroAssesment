@@ -193,3 +193,30 @@ export const ForgetPasswordButton = styled(Button)(() => ({
     },
 
 }));
+
+export const CheckoutButton = styled(Button)(() => ({
+    borderRadius: "4px",
+    height: "48px",
+    width: "100%",
+    fontSize: "15px",
+    fontWeight: "600",
+    background: "#e2e5e5",
+    color: "#abadad",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    outline: "none",
+    cursor: "pointer",
+    fontFamily: "plex-sans, sans-serif",
+    minHeight: "48px",
+    padding: " 12px 24px",
+    textTransform: "none",
+    elevation: "0",
+    marginBottom: "16px",
+    '&:hover': {
+        background: "#e2e5e5",
+        color: "#abadad",
+    },
+
+}));

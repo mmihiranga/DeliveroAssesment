@@ -6,11 +6,11 @@ import MailOutlineSharpIcon from '@mui/icons-material/MailOutlineSharp';
 import { GoogleLogin } from 'react-google-login'
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
-import { register } from '../redux/Users'
 import { gapi } from 'gapi-script'
 import Axios from '../ServerConfig';
 import { FacebookButton,GoogleButton,ManualRegisterButton } from './Button/CustomBtn';
+import { useDispatch } from 'react-redux';
+import { register } from '../redux/userRedux';
 
 const useStyles = makeStyles({
     loginContainer: {
@@ -50,9 +50,9 @@ const useStyles = makeStyles({
 
 const Login = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
     const clientId = "380810221970-6p2h323ibdoknuaddgrb432skkdm157o.apps.googleusercontent.com"
     const navigate = useNavigate()
-    const dispatch = useDispatch();
     
 
     useEffect(() => {
@@ -81,43 +81,7 @@ const Login = () => {
                 password: res.profileObj.googleId,
                 image: res.profileObj.imageUrl,
             }
-            Axios.post('/user/getUserDetails', userDetails)
-                .then(function (response) {
-                    if (response.data.length === 0) {
-                        Axios.post('/user/register', userDetails)
-                            .then(function (results) {
-                                console.log(results)
-                                const user = {
-                                    username: results.data.username,
-                                    email: results.data.email,
-                                    phone:results.data.phone,
-                                    password: results.data.password,
-                                    image: results.data.image,
-                                }
-                                sessionStorage.setItem("token",JSON.stringify( user));
-                                dispatch(register(response.data))
-                                navigate("/");
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                            });
-                    } else {
-                        console.log(response)
-                        const user = {
-                            username: response.data.username,
-                            email: response.data.email,
-                            phone:response.data.phone,
-                            password: response.data.password,
-                            image: response.data.image,
-                        }
-                        sessionStorage.setItem("token",JSON.stringify( user));
-                        dispatch(register(response.data))
-                        navigate('/')
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+            LoginWithGoogle(userDetails);
         }
     }
 
@@ -125,8 +89,30 @@ const Login = () => {
         console.log("LOGIN FAILED!", res)
     }
 
+    const LoginWithGoogle = async (userDetails) => {
+        const result = await Axios.post('/user/getUserDetails', userDetails)
+        if (result.data.length === 0) {
+            const result = await Axios.post('/user/register', userDetails)
+            console.log(result)
+            storeData(result.data);
+        }else{
+            storeData(result.data);
+            
+        }
 
+    }
 
+    const storeData =(data)=> {
+        const user = {
+            username: data.username,
+            email: data.email,
+            phone:data.phone,
+            image: data.image,
+        }
+        sessionStorage.setItem("token",JSON.stringify( user));
+        dispatch(register(user));
+        navigate('/')
+    }
     
 
     return (
