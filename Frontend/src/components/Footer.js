@@ -15,6 +15,9 @@ const useStyles = makeStyles({
         borderRadius:'3px',
         color:'#fff',
         fontFamily:'plex-sans, sans-serif',
+        '@media only screen and (max-width: 540px)': {
+            flex:1,
+        },
     },
     footerBoxTitle:{
         fontSize:'18px',
