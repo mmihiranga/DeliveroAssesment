@@ -85,7 +85,10 @@ const Home = () => {
                 },
                 '@media (max-width: 860px)': {
                     gridTemplateColumns: '1fr',
-                }
+                },
+                '@media only screen and (max-width: 540px)': {
+                    padding: '5px',
+                },
               }
             }>
                <div>
